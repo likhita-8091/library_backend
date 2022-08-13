@@ -1,0 +1,21 @@
+version: "3"
+
+volumes:
+  mysql_data:
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    # restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=library_backend
+      - MYSQL_USER=jw
+      - MYSQL_PASSWORD=jw
+    ports:
+      - "13306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    oom_kill_disable: true
+    mem_limit: 2g
