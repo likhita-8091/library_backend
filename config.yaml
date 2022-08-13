@@ -2,5 +2,5 @@ Mysql:
   addr: "127.0.0.1:13306"
   username: "jw"
   password: "jw"
-  dbname: library_system
+  dbname: "library_backend"
 

@@ -1,7 +1,7 @@
 package core
 
 import (
-	"github.com/CodingJzy/library_system/global"
+	"github.com/CodingJzy/library_backend/global"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 	"log"

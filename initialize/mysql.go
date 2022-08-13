@@ -1,7 +1,7 @@
 package initialize
 
 import (
-	"github.com/CodingJzy/library_system/global"
+	"github.com/CodingJzy/library_backend/global"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"

@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/CodingJzy/library_system/core"
-	"github.com/CodingJzy/library_system/global"
-	"github.com/CodingJzy/library_system/initialize"
-	"github.com/CodingJzy/library_system/middlewars/auth"
+	"github.com/CodingJzy/library_backend/core"
+	"github.com/CodingJzy/library_backend/global"
+	"github.com/CodingJzy/library_backend/initialize"
+	"github.com/CodingJzy/library_backend/middlewars/auth"
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
