@@ -4,3 +4,6 @@ Mysql:
   password: "jw"
   dbname: "library_backend"
 
+System:
+  addr: ":1314"
+

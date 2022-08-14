@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"github.com/CodingJzy/library_backend/global"
+	"github.com/CodingJzy/library_backend/model"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
@@ -28,5 +29,25 @@ func Mysql() *gorm.DB {
 	sqlDB.SetMaxOpenConns(100)
 
 	log.Println("connect mysql success")
+	global.DB = db
 	return db
+}
+
+func CreateTables() {
+	// 创建表
+	err := global.DB.AutoMigrate(
+		&model.User{},
+	)
+	if err != nil {
+		log.Fatal("create tables error：", err)
+	}
+	log.Println("create tables success")
+
+	// 创建默认用户admin
+	err = global.DB.FirstOrCreate(model.NewAdmin()).Debug().Error
+	if err != nil {
+		log.Fatal("create admin user error：", err.Error())
+	}
+
+	log.Println("create admin user success")
 }

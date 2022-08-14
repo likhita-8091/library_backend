@@ -4,6 +4,11 @@ import "fmt"
 
 type Config struct {
 	Mysql Mysql `json:"mysql" yaml:"mysql"`
+	System
+}
+
+type System struct {
+	Addr string
 }
 
 type Mysql struct {
