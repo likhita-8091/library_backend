@@ -12,20 +12,16 @@ const (
 	Reader                      // 读者
 )
 
-const (
-	Boy = iota + 1
-	Girl
-)
-
 type User struct {
 	CommonModel
-	Name       string `json:"name,omitempty" gorm:"unique" validate:"required"`             // 姓名
+	Name       string `json:"name,omitempty" gorm:"unique" validate:"required"`             // 用户名
+	NickName   string `json:"nick_name"`                                                    // 昵称
 	Role       Role   `json:"role,omitempty"gorm:"<-:create" validate:"required,gt=1,lt=4"` // 角色
 	Sex        int    `json:"sex,omitempty"`                                                // 性别
 	Classed    string `json:"classed,omitempty"`                                            // 班级
 	Code       string `json:"code,omitempty"`                                               // 学号
-	Phone      string `json:"phone,omitempty" validate:"len=11"`                            // 手机号
-	Password   string `json:"password,omitempty"`                                           // 密码
+	Phone      string `json:"phone,omitempty"`                                              // 手机号
+	Password   string `json:"-"`                                                            // 密码
 	FirstLogin bool   `gorm:"default:true" json:"first_login,omitempty"`                    // 第一次登陆
 }
 
@@ -37,6 +33,7 @@ func (u User) TableName() string {
 func NewAdmin() *User {
 	admin := &User{
 		Name:       "admin",
+		NickName:   "江不凡",
 		Password:   "admin",
 		Role:       Admin,
 		FirstLogin: true,

@@ -9,7 +9,6 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"log"
-	"net/http"
 	"time"
 )
 
@@ -25,22 +24,22 @@ func (b *BaseApi) Login(c echo.Context) error {
 
 	// 校验
 	if u.Name == "" || u.Password == "" {
-		return response.OkWithMessage("用户名或密码不能为空", c)
+		return response.FailWithMessage("用户名或密码不能为空", c)
 	}
 
 	var user *model.User
 
 	err := global.DB.Where("name = ? ", u.Name).First(&user).Debug().Error
 	if err != nil {
-		return response.OkWithMessage("用户名或密码不正确", c)
+		return response.FailWithMessage("用户名或密码不正确", c)
 	}
 
 	if !model.DecryptPassword(u.Password, user.Password) {
-		return echo.NewHTTPError(http.StatusUnauthorized, "用户名或密码不正确")
+		return response.FailWithMessage("用户名或密码不正确", c)
 	}
 
 	if user.Role == model.Reader {
-		return response.OkWithMessage("读者禁止登陆", c)
+		return response.FailWithMessage("读者禁止登陆", c)
 	}
 
 	// 实例化一个自定义claims

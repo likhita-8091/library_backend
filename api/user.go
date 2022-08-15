@@ -25,6 +25,10 @@ func (u *UserApi) AddUser(c echo.Context) error {
 		return response.FailWithMessage(err.Error(), c)
 	}
 
+	if user.Phone != "" && len(user.Phone) != 11 {
+		return response.FailWithMessage("手机号格式不正确", c)
+	}
+
 	// 如果是添加管理员，禁止添加
 	if user.Role == model.Admin {
 		return response.FailWithMessage("禁止添加管理员", c)
@@ -105,7 +109,7 @@ func (u *UserApi) UpdateUser(c echo.Context) error {
 		return response.FailWithMessage("用户名不能为空", c)
 	}
 
-	if len(user.Phone) != 11 {
+	if user.Phone != "" && len(user.Phone) != 11 {
 		return response.FailWithMessage("手机号格式不正确", c)
 	}
 
