@@ -63,8 +63,12 @@ func (b *BaseApi) Login(c echo.Context) error {
 	log.Println("login success ok", user.Name)
 
 	data := echo.Map{
+		"is_admin":    false,
 		"token":       t,
 		"first_login": user.FirstLogin,
+	}
+	if user.Role == model.Admin {
+		data["is_admin"] = true
 	}
 
 	return response.OkWithDetailed(data, "登陆成功", c)
