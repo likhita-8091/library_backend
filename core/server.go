@@ -39,7 +39,8 @@ func RunServer() {
 		}
 		// 该组下的路由需要jwt 认证
 		APIV1Group := baseGroup.Group("/api/v1", middleware.JWTWithConfig(jwtConf), auth.PreReq)
-		router.BaseGroup.InitUserRouteRoute(APIV1Group)
+		router.BaseGroup.InitUserRoute(APIV1Group)
+		router.BaseGroup.InitBookKindRoute(APIV1Group)
 	}
 
 	// 启动server

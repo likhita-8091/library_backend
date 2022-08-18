@@ -12,6 +12,7 @@ const (
 	Reader                      // 读者
 )
 
+// 用户表
 type User struct {
 	CommonModel
 	Name       string `json:"name,omitempty" gorm:"unique" validate:"required"`             // 用户名

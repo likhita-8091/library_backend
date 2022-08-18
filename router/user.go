@@ -8,7 +8,7 @@ import (
 
 type UserRoute struct{}
 
-func (b *UserRoute) InitUserRouteRoute(g *echo.Group) {
+func (b *UserRoute) InitUserRoute(g *echo.Group) {
 	g.POST("/users", api.AllGroup.AddUser)
 	g.DELETE("/users/:id", api.AllGroup.DeleteUser, auth.CheckID)
 	g.PUT("/users/:id", api.AllGroup.UpdateUser, auth.CheckID)

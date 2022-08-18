@@ -37,6 +37,10 @@ func CreateTables() {
 	// 创建表
 	err := global.DB.AutoMigrate(
 		&model.User{},
+		&model.BookKind{},
+		&model.Book{},
+		&model.T1{},
+		&model.CreditCard{},
 	)
 	if err != nil {
 		log.Fatal("create tables error：", err)
