@@ -6,6 +6,7 @@ import (
 	"github.com/CodingJzy/library_backend/model"
 	"github.com/CodingJzy/library_backend/model/response"
 	"github.com/labstack/echo/v4"
+	"time"
 
 	"strconv"
 )
@@ -27,6 +28,7 @@ func (u *BookKindApi) AddBookKind(c echo.Context) error {
 	}
 
 	// 存库
+
 	if err = global.DB.Create(bookKind).Error; err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
@@ -45,8 +47,18 @@ func (u *BookKindApi) DeleteBookKind(c echo.Context) error {
 	// 删除
 	var bookKind model.BookKind
 	bookKind.ID = uint(id)
-	if err = global.DB.Delete(&bookKind).Debug().Error; err != nil {
-		global.DB.Logger.Warn(context.Background(), err.Error())
+	// 先查询出来
+	err = global.DB.First(&bookKind).Debug().Error
+	if err != nil {
+		return response.FailWithMessage(err.Error(), c)
+	}
+	bookKind.Name = bookKind.Name + "-" + strconv.FormatInt(time.Now().Unix(), 10)
+	// 再更新名字
+	err = global.DB.Updates(&bookKind).Debug().Error
+	if err != nil {
+		return response.FailWithMessage(err.Error(), c)
+	}
+	if err = global.DB.Where("id = ?", bookKind.ID).Delete(&bookKind).Debug().Error; err != nil {
 		return response.FailWithMessage(err.Error(), c)
 	}
 

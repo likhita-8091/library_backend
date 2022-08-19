@@ -47,7 +47,7 @@ func CheckID(next echo.HandlerFunc) echo.HandlerFunc {
 
 		// 如果是删除用户，不能删除超级管理员、不能删除自身
 		if strings.EqualFold("delete", c.Request().Method) {
-			if model.Role(currentRole) == model.Admin {
+			if user.Role == model.Admin {
 				return response.FailWithMessage("超级管理员无法被删除", c)
 			}
 			if currentUserID == user.ID {

@@ -9,6 +9,7 @@ import (
 	"github.com/CodingJzy/library_backend/model/response"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
+	"time"
 
 	"strconv"
 )
@@ -87,6 +88,20 @@ func (u *UserApi) DeleteUser(c echo.Context) error {
 		return response.FailWithMessage("超级管理员不允许删除", c)
 	}
 
+	// 先查询出来
+	err = global.DB.First(&user).Debug().Error
+	if err != nil {
+		return response.FailWithMessage(err.Error(), c)
+	}
+	user.Name = user.Name + "-" + strconv.FormatInt(time.Now().Unix(), 10)
+	// 再更新名字
+	err = global.DB.Updates(&user).Debug().Error
+	if err != nil {
+		return response.FailWithMessage(err.Error(), c)
+	}
+	if err = global.DB.Where("id = ?", user.ID).Delete(&user).Debug().Error; err != nil {
+		return response.FailWithMessage(err.Error(), c)
+	}
 	// 删除
 	if err = global.DB.Where("role != ?", model.Admin).Delete(&user).Debug().Error; err != nil {
 		global.DB.Logger.Warn(context.Background(), err.Error())

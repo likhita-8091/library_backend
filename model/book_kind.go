@@ -16,7 +16,7 @@ import "gorm.io/gorm"
 // 图书分类表
 type BookKind struct {
 	CommonModel
-	Name  string `json:"name" gorm:"unique"`
+	Name  string `json:"name" gorm:"index;unique"`
 	Books []Book `json:"-"`
 }
 

@@ -7,7 +7,7 @@ import (
 
 type BookKindRoute struct{}
 
-func (b *UserRoute) InitBookKindRoute(g *echo.Group) {
+func (b *BookKindRoute) InitBookKindRoute(g *echo.Group) {
 	g.POST("/book_kinds", api.AllGroup.AddBookKind)
 	g.DELETE("/book_kinds/:id", api.AllGroup.DeleteBookKind)
 	g.PUT("/book_kinds/:id", api.AllGroup.UpdateBookKind)
